@@ -6,7 +6,7 @@
   * [实现Trie树](LeetCodeHot100/实现Trie树.md)
   * [最小覆盖字串](leetcodehot100/zui-xiao-fu-gai-zi-chuan.md)
 * [网络](wang-luo/README.md)
-  * [轮询与心跳机制](网络/轮询与心跳机制.md)
+  * [连接、轮询与心跳机制](网络/轮询与心跳机制.md)
 * [JavaScript](javascript/README.md)
   * [Node.js](javascript/node.js/README.md)
     * [CommonJS和ESmodule](JavaScript/Node.js/CommonJS和ESmodule.md)
