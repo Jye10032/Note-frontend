@@ -1,5 +1,6 @@
-CommonJS
+# CommonJS和ESmodule
 
+CommonJS
 
 CommonJS是一种用于JavaScript的模块规范，主要用于服务器端JavaScript环境，如Node.js。
 
@@ -7,10 +8,9 @@ CommonJS是一种用于JavaScript的模块规范，主要用于服务器端JavaS
 
 ES Modules
 
-
 ES Modules（ECMAScript Modules）是JavaScript的一种模块系统，它在ECMAScript 6（ES6）中被引入。模块系统的主要目的是帮助开发者组织和管理代码。
 
-由于无法在浏览器直接使用服务端的 CommonJS，所以发明了ES Modules 用于前端开发。	。
+由于无法在浏览器直接使用服务端的 CommonJS，所以发明了ES Modules 用于前端开发。 。
 
 模块化的方式有很多优点，包括：
 
