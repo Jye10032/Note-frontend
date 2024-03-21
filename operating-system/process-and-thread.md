@@ -10,4 +10,25 @@
 
 有些进程还不止同时干一件事，比如Word，它可以同时进行打字、拼写检查、打印等事情。在一个进程内部，要同时干多件事，就需要同时运行多个“子任务”，进程内的这些“子任务”称为线程（Thread）。
 
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+线程有四种基本状态，分别为：
+
+* 产生（spawn）
+  * 线程被创建或启动，进入产生状态。
+  * 在这个状态下，线程已经被创建并准备好运行，但还没有被调度执行。
+* 阻塞（block）:
+  * 线程在执行过程中遇到某些条件，无法继续执行，进入阻塞状态。
+  * 阻塞状态的线程会暂停执行，直到满足某个条件或等待某个事件发生。
+* 非阻塞（unblock）
+  * 当处于阻塞状态的线程满足了所等待的条件或事件发生时，它可以从阻塞状态切换到非阻塞状态。
+  * 非阻塞状态表示线程可以继续执行。
+* 结束（finish）：
+  * 当线程完成了其任务或由于某种原因终止时，它进入结束状态。
+  * 结束状态表示线程的执行已经结束，不再可执行。
+
+<details>
+
+<summary>为什么长轮询不会阻塞</summary>
+
+
+
+</details>
