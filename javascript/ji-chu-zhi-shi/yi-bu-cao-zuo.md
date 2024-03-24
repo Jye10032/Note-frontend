@@ -1,6 +1,7 @@
-# 异步操作
-## promise
+# Promise
+
 Promise为异步操作提供统一接口，使代码更加易读
+
 ```
 // 传统写法
 step1(function (value1) {
@@ -19,17 +20,17 @@ step1(function (value1) {
   .then(step3)
   .then(step4);
 ```
+
 ### Promise 三种状态
+
 promise对象通过自身的状态，来控制异步操作。Promise 实例具有三种状态。
 
-- 异步操作未完成（pending）
-- 异步操作成功（fulfilled）
-- 异步操作失败（rejected）
+* 异步操作未完成（pending）
+* 异步操作成功（fulfilled）
+* 异步操作失败（rejected）
 
-上面三种状态里面，fulfilled和rejected合在一起称为resolved（已定型）。
-pending-> fulfilled（成功：传回值（value））/rejected（失败，抛出错误（error））
-一旦状态发生变化，就不会再有新的状态变化。
-Promise 实例的状态变化只可能发生一次。
+上面三种状态里面，fulfilled和rejected合在一起称为resolved（已定型）。 pending-> fulfilled（成功：传回值（value））/rejected（失败，抛出错误（error）） 一旦状态发生变化，就不会再有新的状态变化。 Promise 实例的状态变化只可能发生一次。
+
 ```
 var promise = new Promise(function (resolve, reject) {
   // ...
@@ -41,7 +42,13 @@ var promise = new Promise(function (resolve, reject) {
   }
 });
 ```
+
 ### then
+
+then() 方法最多接受两个参数；第一个参数是 Promise 兑现时的回调函数，第二个参数是 Promise 拒绝时的回调函数。每个 `.then()` 返回一个新生成的 Promise 对象，这个对象可被用于链式调用。
+
+
+
 ```javascript
 var p1 = new Promise(function (resolve, reject) {
   resolve('成功');
@@ -54,49 +61,58 @@ var p2 = new Promise(function (resolve, reject) {
 });
 p2.then(console.log, console.error);
 // Error: 失败
-```
-## 定时器
 
-- setInterval函数的用法与setTimeout完全一致，区别仅仅在于setInterval指定某个任务每隔一段时间就执行一次，也就是无限次的定时执行。
-- setTimeout和setInterval函数，都返回一个整数值，表示计数器编号。将该整数传入clearTimeout和clearInterval函数，就可以取消对应的定时器。
-### 防抖动（debounce）
-只执行最后一次操作
-设置一个门槛值，表示两次 Ajax 通信的最小间隔时间。如果在间隔时间内，发生新的keydown事件，则不触发 Ajax 通信，并且重新开始计时。如果过了指定时间，没有发生新的keydown事件，再将数据发送出去。
-这种做法叫做 debounce（防抖动）。假定两次 Ajax 通信的间隔不得小于2500毫秒，上面的代码可以改写成下面这样。
-```javascript
-$('textarea').on('keydown', debounce(ajaxAction, 2500));
-
-function debounce(fn, delay){
-  var timer = null; // 声明计时器
-  return function() {
-    var context = this;
-    var args = arguments;
-    clearTimeout(timer);//清空timer计时器
-    timer = setTimeout(function () {
-      fn.apply(context, args);
-    }, delay);
-  };
-}
 ```
-### 节流
-只执行第一次操作
-在节流函数中，我们同样使用了闭包来保存定时器变量 timer 和传入的函数 func。每次触发事件时，如果定时器不存在，就设置一个定时器，并在 delay 时间后执行传入的函数 func。如果在 delay 时间内再次触发事件，由于定时器还存在，就不会执行传入的函数 func。只有在 delay 时间后定时器到达时间后执行传入的函数 func 并
-```javascript
-function throttle(func, delay) {
-  let timer = null;
-  return function(...args) {
-    if (!timer) {
-      timer = setTimeout(() => {
-        func.apply(this, args);
-        timer = null;
-      }, delay);
-    }
-  };
-}
 
-// 使用节流优化滚动事件
-window.addEventListener('scroll', throttle(function() {
-  console.log('scrolling...');
-  // 计算滚动距离
-}, 500));
+#### **链式调用**
+
+一个 Promise 的终止条件决定了链中下一个 Promise 的“已敲定”状态。链中每个已兑现的 Promise 的返回值会传递给下一个 `.then()`，而已拒绝的 Promise 会把失败原因传递给链中下一个拒绝处理函数。
+
+在每个 `.then()` 中处理被拒绝的 Promise 对于 Promise 链的下游有重要的影响。
+
+* 错误必须立即被处理的情况下，必须抛出某种类型的错误以维护链中的错误状态。
+* 在没有迫切需要的情况下，最好将错误处理留到最后一个 `.catch()` 语句。`.catch()` 其实就是一个没有为 Promise 兑现时的回调函数留出空位的 `.then()`。
+
 ```
+myPromise
+  .then((value) => `${value} and bar`)
+  .then((value) => `${value} and bar again`)
+  .then((value) => `${value} and again`)
+  .then((value) => `${value} and again`)
+  .then((value) => {
+    console.log(value);
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
+```
+
+#### 结果的值
+
+[`Promise.reject()`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global\_Objects/Promise/reject)
+
+返回一个新的 `Promise` 对象，该对象以给定的原因拒绝。
+
+[`Promise.resolve()`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global\_Objects/Promise/resolve)
+
+返回一个新的 `Promise` 对象，该对象以给定的值兑现。
+
+* 如果值是一个 thenable 对象（即具有 `then` 方法），则返回的 Promise 对象会“跟随”该 thenable 对象，采用其最终的状态；
+* 否则，返回的 Promise 对象会以该值兑现。
+* 通常，如果你不知道一个值是否是 Promise，那么最好使用 [`Promise.resolve(value)`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global\_Objects/Promise/resolve) 将其转换成 Promise 对象，并将返回值作为 Promise 来处理。
+
+```
+const promiseA = new Promise((resolve, reject) => {
+  resolve(777);
+});
+// 此时，“promiseA”已经敲定了
+promiseA.then((val) => console.log("异步日志记录有值：", val));
+console.log("立即记录");
+
+```
+
+总结：.then会处理前一个 Promise的结果并且返回Promise，Promise 的结果会以 Promise 或者值的方式传给 .then。
+
+{% embed url="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise" %}
+
