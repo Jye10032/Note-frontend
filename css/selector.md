@@ -23,7 +23,7 @@
 
 ***
 
-伪元素选择器示例：
+**伪元素选择器示例：**
 
 * 使用 `::before` 插入内容：
 
@@ -57,6 +57,24 @@ p::first-letter {
 
 上述示例将使所有 `<p>` 元素的首字母字体大小为 2 倍，并设置为红色。
 
-***
+**直接子元素 >**
+
+`>` 是子选择器（child selector）的一种。它用于选择指定元素的直接子元素。
+
+```
+<div class="rtl">
+  <p>This paragraph is selected.</p> <!-- 直接作为 .rtl 元素的子元素 -->
+  <div>
+    <p>This paragraph is not selected.</p> <!-- 不是 .rtl 元素的直接子元素 -->
+  </div>
+</div>
+
+```
+
+在上述示例中，只有第一个 `<p>` 元素会被选择，因为它是直接作为具有 `.rtl` 类的 `<div>` 元素的子元素。
+
+所以，`>` 选择器用于选择特定元素的直接子元素，而不会匹配更深层次的子元素。
+
+
 
 {% embed url="https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_selectors" %}
